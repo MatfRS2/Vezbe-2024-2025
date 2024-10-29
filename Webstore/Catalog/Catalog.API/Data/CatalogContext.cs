@@ -9,7 +9,7 @@ public class CatalogContext: ICatalogContext
 
     public CatalogContext(IConfiguration configuration)
     {
-        var client = new MongoClient("mongodb://localhost:27017");
+        var client = new MongoClient(configuration.GetValue<string>("DataBaseSettings:ConnectionString"));
         var database = client.GetDatabase("CatalogDB");
         
         Products = database.GetCollection<Product>("Products");
