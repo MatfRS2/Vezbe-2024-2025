@@ -9,5 +9,5 @@ public class ShoppingCart
 
     public string Username { get; set; }
     public List<ShoppingCartItem> Items = new List<ShoppingCartItem>();
-    
+    public int TotalPrice;
 }

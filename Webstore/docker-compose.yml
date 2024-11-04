@@ -1,4 +1,10 @@
 ﻿services:
+  discountdb:
+    image: postgres
+  
+  pgadmin:
+    image: dpage/pgadmin4
+    
   catalogdb:
     image: mongo
     
@@ -16,6 +22,21 @@
     build:
       context: .
       dockerfile: Catalog/Catalog.API/Dockerfile
+      
+  discount.api:
+    image: discount.api
+    build:
+      context: .
+      dockerfile: Discount/Discount.API/Dockerfile
+  
+  discount.grpc:
+    image: discount.grpc
+    build:
+      context: .
+      dockerfile: Discount/Discount.GRPC/Dockerfile
 
 volumes:
   mongo_data:
+  postgres_data:
+  pgadmin_data:
+   
