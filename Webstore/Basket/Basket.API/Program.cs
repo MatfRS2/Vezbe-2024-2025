@@ -1,4 +1,6 @@
+using Basket.API.GrpcServices;
 using Basket.API.Repositories;
+using Discount.GRPC;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,7 +16,9 @@ builder.Services.AddStackExchangeRedisCache(
         opts.Configuration = builder.Configuration.GetValue<string>("CacheSettings:ConnectionString"); 
     }
 );
-
+builder.Services.AddGrpcClient<CouponProtoService.CouponProtoServiceClient>
+    (o => o.Address = new Uri("http://discount.grpc"));
+builder.Services.AddScoped<CouponGrpcService>();
 
 
 var app = builder.Build();
@@ -26,7 +30,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
 app.MapControllers();
 

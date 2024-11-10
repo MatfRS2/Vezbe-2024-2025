@@ -37,6 +37,7 @@ services:
     restart: always
     ports:
       - "6379:6379"
+      
   catalog.api:
     container_name: catalog.api
     environment:
@@ -50,9 +51,12 @@ services:
   basket.api:
     container_name: basket.api
     environment:
+        - ASPNETCORE_ENVIRONMENT=Development
         - "CacheSettings:ConnectionString=basketdb:6379"
+        - "GrpcSettings:DiscountUrl=http://discount.grpc"
     depends_on:
         - basketdb
+        - discount.grpc
     ports:
       - "8001:8080"
   

@@ -19,17 +19,19 @@ public class CouponService: CouponProtoService.CouponProtoServiceBase
 
     public override async Task<GetDiscountResponse> GetDiscount(GetDiscountRequest request, ServerCallContext context)
     {
-        var coupon = await _couponRepository.GetDiscount(request.ProductName);
-        _logger.LogInformation("Get discount for product: {ProductName}", coupon.ProductName);
+        var coupon = await _couponRepository.GetDiscount(request.ProductName) ?? throw new RpcException(new Status(StatusCode.NotFound, $"Product with productName ={request.ProductName} not found"));
+        _logger.LogInformation("Get discount for product: {ProductName} was found", coupon.ProductName);
         return _mapper.Map<GetDiscountResponse>(coupon);
     }
 
     public override async Task<GetRandomDiscountsResponse> GetRandomDiscounts(GetRandomDiscountsRequest request, ServerCallContext context)
     {
-        var coupons = await _couponRepository.GetRandomDiscounts(request.NumberOfDiscounts);
+        var coupons = await _couponRepository.GetRandomDiscounts(request.NumberOfDiscounts) ?? throw new RpcException(new Status(StatusCode.NotFound, $"Number of discounts not found"));
         
         var response = new GetRandomDiscountsResponse();
-        
-        throw new NotImplementedException();
+        response.Coupons.AddRange(_mapper.Map<IEnumerable<GetRandomDiscountsResponse.Types.Coupon>>(coupons));
+        response.TotalAmount = coupons.Sum(coupon => coupon.Amount);
+        _logger.LogInformation("GetRandomDiscounts returned random discount");
+        return response;
     }
 }

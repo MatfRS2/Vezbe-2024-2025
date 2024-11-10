@@ -15,7 +15,7 @@ public class CouponContext : ICouponContext
 
     public NpgsqlConnection GetConnection()
     {
-        var conStr = _configuration.GetValue<string>("DatabaseString:ConnectionString");
+        var conStr = _configuration.GetValue<string>("DatabaseSettings:ConnectionString");
         return new NpgsqlConnection(conStr);
     }
 }

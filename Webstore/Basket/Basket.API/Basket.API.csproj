@@ -9,10 +9,19 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="Grpc" Version="2.46.6" />
+        <PackageReference Include="Grpc.AspNetCore" Version="2.66.0" />
+        <PackageReference Include="Grpc.Core" Version="2.46.6" />
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.0"/>
         <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="8.0.10" />
         <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Protobuf Include="..\..\Discount\Discount.GRPC\Protos\Coupon.proto" GrpcServices="Client" >
+            <Link>Protos\Coupon.proto</Link>
+        </Protobuf>
     </ItemGroup>
 
     <ItemGroup>
