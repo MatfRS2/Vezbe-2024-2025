@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Discount.GRPC", "Discount\D
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ordering.Domain", "Ordering\Ordering.Domain\Ordering.Domain.csproj", "{6EC65734-823B-4033-8AD1-70E8BAB365C4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ordering.Application", "Ordering\Ordering.Application\Ordering.Application.csproj", "{90843C74-25E2-4AA0-99CA-BFBBE033DB2B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,5 +49,9 @@ Global
 		{6EC65734-823B-4033-8AD1-70E8BAB365C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6EC65734-823B-4033-8AD1-70E8BAB365C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6EC65734-823B-4033-8AD1-70E8BAB365C4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{90843C74-25E2-4AA0-99CA-BFBBE033DB2B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{90843C74-25E2-4AA0-99CA-BFBBE033DB2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{90843C74-25E2-4AA0-99CA-BFBBE033DB2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{90843C74-25E2-4AA0-99CA-BFBBE033DB2B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

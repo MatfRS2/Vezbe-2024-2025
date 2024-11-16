@@ -17,7 +17,7 @@ builder.Services.AddStackExchangeRedisCache(
     }
 );
 builder.Services.AddGrpcClient<CouponProtoService.CouponProtoServiceClient>
-    (o => o.Address = new Uri("http://discount.grpc"));
+    (o => o.Address = new Uri(builder.Configuration.GetValue<string>("GrpcSettings:DiscountUrl")));
 builder.Services.AddScoped<CouponGrpcService>();
 
 
