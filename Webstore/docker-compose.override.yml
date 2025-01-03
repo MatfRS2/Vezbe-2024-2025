@@ -1,6 +1,24 @@
-version: '3.4'
 
 services:
+  
+  mssql:
+    container_name: mssql
+    restart: always
+    ports:
+      - "1433:1433"
+    environment:
+      - SA_PASSWORD=MATF12345678rs2
+      - ACCEPT_EULA=Y
+    volumes:
+      - mssql_data:\var\opt\mssql\data
+
+  rabbitmq:
+    container_name: rabbitmq
+    restart: always
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+  
   discountdb:
     container_name: discountdb
     restart: always
@@ -48,15 +66,29 @@ services:
     ports:
       - "8000:8080"
 
+  ordering.api:
+    container_name: ordering.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "ConnectionStrings:OrderingConnectionString=Server=mssql;Database=OrderDb;User Id=sa;Password=MATF12345678rs2;TrustServerCertificate=True;Encrypt=False;"
+      - "EventBusSettings:HostAddress=amqp://guest:guest@rabbitmq:5672"
+    depends_on:
+      - mssql
+      - rabbitmq
+    ports:
+      - "8004:8080"
+
   basket.api:
     container_name: basket.api
     environment:
         - ASPNETCORE_ENVIRONMENT=Development
         - "CacheSettings:ConnectionString=basketdb:6379"
+        - "EventBusSettings:HostAddress=amqp://guest:guest@rabbitmq:5672"
         - "GrpcSettings:DiscountUrl=http://discount.grpc:8080" 
     depends_on:
         - basketdb
         - discount.grpc
+        - rabbitmq
     ports:
       - "8001:8080"
   
@@ -79,3 +111,14 @@ services:
       - discountdb
     ports:
       - "8003:8080"
+        
+  
+  identityserver:
+    container_name: identityserver
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "ConnectionStrings:IdentityConnectionString=Server=mssql;Database=IdentityDb;User Id=sa;Password=MATF12345678rs2;TrustServerCertificate=true;Encrypt=false;"
+    depends_on:
+      - mssql
+    ports:
+      - "4000:8080"

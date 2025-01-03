@@ -1,4 +1,11 @@
 ﻿services:
+  
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+  
+  mssql:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+  
   discountdb:
     image: postgres
   
@@ -11,32 +18,45 @@
   basketdb:
     image: redis:alpine
   
+  ordering.api:
+    image: ordering.api
+    build:
+      context: .
+      dockerfile: Services/Ordering/Ordering.API/Dockerfile
+      
   basket.api:
     image: basket.api
     build:
       context: .
-      dockerfile: Basket/Basket.API/Dockerfile
+      dockerfile: Services/Basket/Basket.API/Dockerfile
 
   catalog.api:
     image: catalog.api
     build:
       context: .
-      dockerfile: Catalog/Catalog.API/Dockerfile
+      dockerfile: Services/Catalog/Catalog.API/Dockerfile
       
   discount.api:
     image: discount.api
     build:
       context: .
-      dockerfile: Discount/Discount.API/Dockerfile
+      dockerfile: Services/Discount/Discount.API/Dockerfile
   
   discount.grpc:
     image: discount.grpc
     build:
       context: .
-      dockerfile: Discount/Discount.GRPC/Dockerfile
+      dockerfile: Services/Discount/Discount.GRPC/Dockerfile
+
+  identityserver:
+    image: identityserver
+    build:
+      context: .
+      dockerfile: Security/IdentityServer/Dockerfile
 
 volumes:
   mongo_data:
   postgres_data:
   pgadmin_data:
+  mssql_data:
    
